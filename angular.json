@@ -118,9 +118,21 @@
         "deploy": {
           "builder": "@angular/fire:deploy",
           "options": {}
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "monthly-money-manager"
+  "defaultProject": "monthly-money-manager",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

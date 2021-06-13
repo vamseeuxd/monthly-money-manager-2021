@@ -3,7 +3,6 @@
   position: fixed;
   top: 77px;
   left: 0;
-  width: 100vw;
   background: rgba(0, 0, 0, 0);
   height: 100vh;
   z-index: 10000;
@@ -16,6 +15,8 @@
     pointer-events: none;
     background-color: transparent;
   }
+
+  //noinspection CssUnusedSymbol
   .list-group {
     background-color: #f8f9fa !important;
     padding: 10px;

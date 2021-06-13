@@ -1,5 +1,6 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
+// noinspection JSUnusedLocalSymbols
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
@@ -19,7 +20,7 @@ export class SideMenuComponent {
     this.cssClassName = value ? '' : 'close-menu';
   }
 
-  onClickedOutside(e: Event) {
+  onClickedOutside() {
     this.open = false;
   }
 }

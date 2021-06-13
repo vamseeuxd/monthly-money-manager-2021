@@ -1,4 +1,4 @@
-import { ConfirmationComponent } from './../confirmation.component';
+import { ConfirmationComponent } from '../confirmation.component';
 import { InjectionToken, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 

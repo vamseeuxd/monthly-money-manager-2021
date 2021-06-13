@@ -1,11 +1,12 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
+// noinspection JSUnusedLocalSymbols
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
 })
-export class SideMenuComponent implements OnInit {
+export class SideMenuComponent {
   @HostBinding('class') cssClassName = 'close-menu';
   constructor() {}
 
@@ -19,9 +20,7 @@ export class SideMenuComponent implements OnInit {
     this.cssClassName = value ? '' : 'close-menu';
   }
 
-  ngOnInit(): void {}
-
-  onClickedOutside(e: Event) {
+  onClickedOutside() {
     this.open = false;
   }
 }

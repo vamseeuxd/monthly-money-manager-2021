@@ -2,11 +2,10 @@ import {
   CONFIRMATION_SERVICE_TOKEN,
   ConfirmationService,
 } from './component/confirmation/service/confirmation.service';
-import { ApplicationRef, Component, HostBinding, Inject } from '@angular/core';
+import { ApplicationRef, Component, Inject } from '@angular/core';
 import { SwPush, SwUpdate } from '@angular/service-worker';
-import { interval } from 'rxjs';
 import { AngularFireMessaging } from '@angular/fire/messaging';
-import { mergeMap, mergeMapTo } from 'rxjs/operators';
+import { mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +43,7 @@ export class AppComponent {
     this.afMessaging.getToken
       // @ts-ignore
       .pipe(mergeMap((token) => this.afMessaging.deleteToken(token)))
-      .subscribe((token) => {
+      .subscribe(() => {
         console.log('Token deleted!');
       });
   }
@@ -59,7 +58,7 @@ export class AppComponent {
       console.log('Not Enabled');
       return;
     }
-    this.update.available.subscribe((event) => {
+    this.update.available.subscribe(() => {
       this.confirmationService.open(
         'new update is available for the app.',
         (confirmed) => {

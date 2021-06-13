@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~font-awesome/css/font-awesome.min.css";
+* {
+  &:active,
+  :focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+label {
+  margin-bottom: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.cdk-overlay-container {
+  z-index: 10000000;
+}

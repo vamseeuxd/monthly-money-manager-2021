@@ -25,3 +25,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+1. Monthly Money Manager will improve Financial Management with poise, strength and boldness.
+
+2. Monthly Money Manager brings authority and poise to every individual who want's manage money  by improving Financial Management.
+
+3. Monthly Money Manager offers a unique planning experience for every individual who want's manage money , by providing the best expense tracking, budgeting, banking and evaluating taxes.

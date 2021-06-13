@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "monthly-money-manager-7c461": {
+      "hosting": {
+        "monthly-money-manager": [
+          "monthly-money-manager-7c461"
+        ]
+      }
+    }
+  }
+}

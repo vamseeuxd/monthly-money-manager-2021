@@ -1,0 +1,7 @@
+:host{
+  .expenses-list{
+    height: calc(100vh - 210px);
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+}

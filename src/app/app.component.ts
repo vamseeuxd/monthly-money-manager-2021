@@ -41,6 +41,7 @@ export class AppComponent {
 
   deleteMessagingToken() {
     this.afMessaging.getToken
+      // Argument of type 'string | null' is not assignable to parameter of type 'string'.   Type 'null' is not assignable to type 'string'.
       // @ts-ignore
       .pipe(mergeMap((token) => this.afMessaging.deleteToken(token)))
       .subscribe(() => {

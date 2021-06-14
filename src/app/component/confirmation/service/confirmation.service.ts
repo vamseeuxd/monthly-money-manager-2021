@@ -1,16 +1,23 @@
-import { ConfirmationComponent } from '../confirmation.component';
-import { InjectionToken, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {ConfirmationComponent} from '../confirmation.component';
+import {Injectable, InjectionToken} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 
-@Injectable({ providedIn: 'root' })
+export interface IConfirmationData {
+  message: string,
+  buttonText: { ok: string, cancel: string },
+  isAlert: boolean,
+}
+
+@Injectable({providedIn: 'root'})
 export class ConfirmationService {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+  }
 
   open(
     message: string,
     callBack: (confirmed: boolean) => void,
     isAlert = false,
-    buttonText = { ok: 'OK', cancel: 'Cancel' }
+    buttonText = {ok: 'OK', cancel: 'Cancel'}
   ) {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {

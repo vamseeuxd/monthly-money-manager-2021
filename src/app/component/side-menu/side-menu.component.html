@@ -4,7 +4,7 @@
   class="list-group bg-white rounded-0 shadow"
   style="overflow-y: auto; overflow-x: hidden"
 >
-  <li class="list-group-item rounded-0">Manage Fixed Expenses</li>
+  <li class="list-group-item rounded-0" role="button" [routerLinkActive]="'active'" routerLink="expenses">Manage Fixed Expenses</li>
   <li class="list-group-item rounded-0">Manage Fixed Income</li>
   <li class="list-group-item rounded-0">Manage Credit Cards</li>
   <li class="list-group-item rounded-0">Manage Loans</li>
@@ -14,6 +14,8 @@
   <li class="list-group-item rounded-0">Manage Mutual Funds</li>
   <li class="list-group-item rounded-0">Manage shares</li>
   <li class="list-group-item rounded-0">Manage Tax Saving Sections</li>
+  <li class="list-group-item rounded-0" role="button" (click)="logout()">Logout</li>
+  <li class="list-group-item rounded-0" role="button" [routerLinkActive]="'active'" routerLink="user">My Profile</li>
 </ul>
 
 

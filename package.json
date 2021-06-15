@@ -10,7 +10,7 @@
     "deploy": "firebase deploy",
     "build-and-deploy": "npm run build & npm run deploy",
     "watch": "ng build --watch --configuration development",
-    "page": "ng g c pages/expenses",
+    "page": "ng g c pages/user",
     "component": "ng g c component/confirmation",
     "service": "ng g s component/service/confirmation",
     "modal": "ng g c pages/expenses",

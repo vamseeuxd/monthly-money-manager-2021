@@ -1,5 +1,6 @@
 import { Component, Inject} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {IConfirmationData} from "./service/confirmation.service";
 
 @Component({
   selector: 'app-confirmation',
@@ -12,7 +13,7 @@ export class ConfirmationComponent {
   cancelButtonText = 'Cancel';
   isAlert = false;
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: any,
+    @Inject(MAT_DIALOG_DATA) private data: IConfirmationData,
     private dialogRef: MatDialogRef<ConfirmationComponent>
   ) {
     if (data) {

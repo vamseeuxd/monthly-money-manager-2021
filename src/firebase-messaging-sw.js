@@ -13,4 +13,4 @@ firebase.initializeApp({
   measurementId: "G-EMZ3GBQ40T"
 });
 
-const messaging = firebase.messaging();
+firebase.messaging();

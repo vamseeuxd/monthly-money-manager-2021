@@ -12,7 +12,7 @@
     "watch": "ng build --watch --configuration development",
     "page": "ng g c pages/user",
     "component": "ng g c component/confirmation",
-    "service": "ng g s component/service/confirmation",
+    "service": "ng g s services/FirebaseCloudMessage",
     "modal": "ng g c pages/expenses",
     "test": "ng test"
   },

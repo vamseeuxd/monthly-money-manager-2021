@@ -2,12 +2,12 @@ import {CONFIRMATION_SERVICE_TOKEN, ConfirmationService,} from './component/conf
 import {ApplicationRef, Component, Inject} from '@angular/core';
 import {SwPush, SwUpdate} from '@angular/service-worker';
 import {AngularFireMessaging} from '@angular/fire/messaging';
-import {mergeMap} from 'rxjs/operators';
 import {AngularFireAuth} from "@angular/fire/auth";
 import {Router} from "@angular/router";
 import {SideMenuComponent} from "./component/side-menu/side-menu.component";
 import {LoaderService} from "./services/loader/loader.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {FirebaseCloudMessageService} from "./services/firebase-cloud-message/firebase-cloud-message.service";
 
 @Component({
   selector: 'app-root',
@@ -23,6 +23,7 @@ export class AppComponent {
     private appRef: ApplicationRef,
     private swPush: SwPush,
     private afMessaging: AngularFireMessaging,
+    private fcmService: FirebaseCloudMessageService,
     public auth: AngularFireAuth,
     public route: Router,
     public loader: LoaderService,
@@ -32,36 +33,7 @@ export class AppComponent {
   ) {
     this.updateClient();
     this.checkUpdate();
-    this.requestMessagingPermission();
     window.AppLoader = loader;
-  }
-
-  requestMessagingPermission() {
-    this.afMessaging.requestToken.subscribe(
-      (token) => {
-        console.log('Permission granted! Save to the server!', token);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  deleteMessagingToken() {
-    this.afMessaging.getToken
-      // Argument of type 'string | null' is not assignable to parameter of type 'string'.   Type 'null' is not assignable to type 'string'.
-      // @ts-ignore
-      .pipe(mergeMap((token) => this.afMessaging.deleteToken(token)))
-      .subscribe(() => {
-        console.log('Token deleted!');
-      });
-  }
-
-  listenMessaging() {
-    this.afMessaging.messages
-      .subscribe((message) => {
-        console.log(message);
-      });
   }
 
   updateClient() {
@@ -110,7 +82,6 @@ export class AppComponent {
   }
 
   toggleSideMenu(appSideMenu: SideMenuComponent) {
-    console.log(appSideMenu.open);
     appSideMenu.open = !appSideMenu.open;
   }
 }

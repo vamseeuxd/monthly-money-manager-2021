@@ -8,7 +8,7 @@ import {IConfirmationData} from "./service/confirmation.service";
   styleUrls: ['./confirmation.component.scss'],
 })
 export class ConfirmationComponent {
-  message: string = 'Are you sure?';
+  message = 'Are you sure?';
   confirmButtonText = 'Yes';
   cancelButtonText = 'Cancel';
   isAlert = false;

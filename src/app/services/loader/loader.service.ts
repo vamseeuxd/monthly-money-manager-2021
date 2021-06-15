@@ -7,7 +7,7 @@ import {ConfirmationService} from "../../component/confirmation/service/confirma
 
 @Injectable({providedIn: 'root'})
 export class LoaderService {
-  private loaderRequestsList: any[] = [];
+  private loaderRequestsList: number[] = [];
   private loaderSubject = new BehaviorSubject<boolean>(this.loaderRequestsList.length > 0);
   showLoader$ = this.loaderSubject.asObservable();
 
@@ -31,7 +31,7 @@ export class LoaderService {
     this.loaderSubject.next(this.loaderRequestsList.length > 0);
   }
 
-  async logout() {
+  logout() {
     this.confirmation.open('Are you sure!Do you want to Logout?', async (confirmed) => {
       if (confirmed) {
         const loaderId = window.AppLoader.show();

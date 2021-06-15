@@ -31,7 +31,7 @@ export class FirebaseCloudMessageService {
   /**
    * ts-ignore for 'token' has no initializer and is not definitely assigned in the constructor
    * @ts-ignore */
-  token: string = '';
+  token = '';
   deviceId = '';
   tokenAction: BehaviorSubject<string | null> = new BehaviorSubject<string | null>('');
   token$: Observable<string | null> = this.tokenAction.asObservable();
@@ -69,6 +69,7 @@ export class FirebaseCloudMessageService {
                   await docRef.set({email, id, createdOn, updatedOn, token, platform})
                   window.AppLoader.hide(busyIndicatorId);
                 } catch (e) {
+                  console.error(e);
                   window.AppLoader.hide(busyIndicatorId);
                 }
               } else (user && user.email && token)

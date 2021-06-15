@@ -10,10 +10,10 @@
     "deploy": "firebase deploy",
     "build-and-deploy": "npm run build & npm run deploy",
     "watch": "ng build --watch --configuration development",
-    "page": "ng g c pages/user",
+    "page": "ng g c pages/ManageNotification",
     "component": "ng g c component/confirmation",
     "service": "ng g s services/FirebaseCloudMessage",
-    "modal": "ng g c pages/expenses",
+    "modal": "ng g c pages/ManageNotification",
     "test": "ng test"
   },
   "private": true,

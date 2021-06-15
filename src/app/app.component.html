@@ -1,35 +1,10 @@
 <!--suppress XmlHighlighting -->
 <ng-container *ngIf="auth.user | async as user">
-  <nav
-    class="
-    navbar navbar-light
-    bg-light
-    fixed-top
-    shadow
-    d-flex
-    align-items-center
-  "
-  >
-    <button
-      role="button"
-      aria-label="Center Align"
-      (click)="toggleSideMenu(appSideMenu)"
-      class="btn btn-light bg-transparent border-0 position-absolute m-0 p-0"
-      id="app-side-menu-button"
-      style="font-size: 28px"
-    >
-      <i class="fa fa-bars"></i>
-    </button>
+  <nav class="navbar navbar-light bg-light fixed-top shadow d-flex align-items-center">
+    <button role="button" aria-label="Center Align" (click)="toggleSideMenu(appSideMenu)" class="btn btn-light bg-transparent border-0 position-absolute m-0 p-0" id="app-side-menu-button" style="font-size: 28px"><i class="fa fa-bars"></i></button>
     <a class="navbar-brand w-100 m-0">
       <!--suppress CheckImageSize -->
-      <img
-        src="./assets/icons/icon-192x192.png"
-        height="50"
-        class="d-inline-block align-top mr-3"
-        alt=""
-      />
-      Monthly Money Manager V5
-    </a>
+      <img src="./assets/icons/icon-192x192.png" height="50" class="d-inline-block align-top mr-3" alt=""/>Monthly Money Manager V5</a>
   </nav>
   <app-side-menu #appSideMenu></app-side-menu>
 </ng-container>
@@ -37,31 +12,36 @@
   <router-outlet></router-outlet>
 </div>
 
-
-<div class="drag-boundary" *ngIf="auth.user | async as user">
-  <div class="d-inline-block dragging-item bg-light border p-1 shadow-sm" cdkDragBoundary=".drag-boundary" cdkDrag>
-    <div class="btn-group" dropdown>
-      <button aria-label="Center Align" style="width: 150px;" dropdownToggle type="button"
-              class="btn btn-default rounded-0 dropdown-toggle">{{selectedPage}} <span class="caret"></span>
-      </button>
-      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-        <li role="button">
-          <a role="button" class="dropdown-item border-bottom" (click)="selectedPage = 'Expenses'">Expenses</a>
-        </li>
-        <li role="button">
-          <a role="button" class="dropdown-item border-bottom" (click)="selectedPage = 'Incomes'">Incomes</a>
-        </li>
-        <li role="button">
-          <a role="button" class="dropdown-item" (click)="selectedPage = 'Saving'">Saving</a>
-        </li>
-      </ul>
+<ng-container *ngIf="routeData$ | async as routeData">
+  <ng-container *ngIf="!routeData?.hideQuickMenu">
+    <div class="drag-boundary" *ngIf="auth.user | async as user">
+      <div class="d-inline-block dragging-item bg-light border p-1 shadow-sm" cdkDragBoundary=".drag-boundary" cdkDrag>
+        <div class="btn-group" dropdown>
+          <button aria-label="Center Align" style="width: 150px;" dropdownToggle type="button"
+                  class="btn btn-default rounded-0 dropdown-toggle">
+            {{selectedPage}}
+            <span class="caret"></span>
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="button">
+              <a role="button" class="dropdown-item border-bottom" (click)="selectedPage = 'Expenses'">Expenses</a>
+            </li>
+            <li role="button">
+              <a role="button" class="dropdown-item border-bottom" (click)="selectedPage = 'Incomes'">Incomes</a>
+            </li>
+            <li role="button">
+              <a role="button" class="dropdown-item" (click)="selectedPage = 'Saving'">Saving</a>
+            </li>
+          </ul>
+        </div>
+        <button aria-label="Center Align" cdkDragHandle class="btn-default rounded-0 btn border-left cdk-drag-handle">
+          <i class="fa fa-arrows"></i>
+        </button>
+      </div>
     </div>
-    <button aria-label="Center Align" cdkDragHandle class="btn-default rounded-0 btn border-left cdk-drag-handle">
-      <i class="fa fa-arrows"></i>
-    </button>
-  </div>
+  </ng-container>
+</ng-container>
 
-</div>
 
 <div
   *ngIf="loader.showLoader$ | async"

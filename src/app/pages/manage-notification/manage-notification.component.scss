@@ -1,0 +1,21 @@
+:host {
+  .notifications-list {
+    height: calc(100vh - 410px);
+    box-sizing: border-box;
+    overflow-y: auto;
+    transition: height ease-in-out 0.5s;
+
+    &.hide-footer {
+      height: calc(100vh - 180px);
+    }
+  }
+
+  .page-footer {
+    height: 270px;
+    transition: height ease-in-out 0.5s;
+
+    &.hide-footer {
+      height: 40px;
+    }
+  }
+}

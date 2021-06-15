@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import firebase from "firebase";
-import {BehaviorSubject, combineLatest, Observable} from "rxjs";
+import {BehaviorSubject, combineLatest, from, Observable} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AngularFireMessaging} from "@angular/fire/messaging";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
@@ -80,6 +80,28 @@ export class FirebaseCloudMessageService {
         }
       })
     }, 50);
+    this.registerForMessage();
+  }
+
+  getSendMessageRequest(title: string, body: string, icon: string, to: string) {
+    const key = 'AAAApGJCCdk:APA91bEJQG8GU7Q1hvT8oHXSQ2tEOvoBPOShNYzLokdxy5cIO_CFDOldvIzj0c7KYLNR8vUqWccslTgd52WaBYYyP7Zj01dke9HKPxyodgM4A0zM36BL3CFdpux0aNKS0mJ8RH7THnoy';
+    const notification = {title, body, icon};
+    return from(
+      fetch(
+        'https://fcm.googleapis.com/fcm/send',
+        {
+          'method': 'POST',
+          'headers': {'Authorization': 'key=' + key, 'Content-Type': 'application/json'},
+          'body': JSON.stringify({'notification': notification, 'to': to})
+        }
+      ).then(res => res.json())
+    );
+  }
+
+  registerForMessage(): void {
+    this.afMessaging.messages.subscribe(value => {
+      console.log(value);
+    })
   }
 
 }

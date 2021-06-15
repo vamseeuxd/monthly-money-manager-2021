@@ -3,11 +3,13 @@ import {ApplicationRef, Component, Inject} from '@angular/core';
 import {SwPush, SwUpdate} from '@angular/service-worker';
 import {AngularFireMessaging} from '@angular/fire/messaging';
 import {AngularFireAuth} from "@angular/fire/auth";
-import {Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {SideMenuComponent} from "./component/side-menu/side-menu.component";
 import {LoaderService} from "./services/loader/loader.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FirebaseCloudMessageService} from "./services/firebase-cloud-message/firebase-cloud-message.service";
+import {filter, map, mergeMap} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,17 @@ import {FirebaseCloudMessageService} from "./services/firebase-cloud-message/fir
 export class AppComponent {
   // @HostBinding('class') cssClass = 'd-flex justify-content-center align-items-center flex-column vw-100 vh-100 min-vw-100 min-vh-100';
   selectedPage = 'Expenses';
+  // @ts-ignore
+  routeData$: Observable<{ hideQuickMenu: boolean }> = this.route.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    map(() => this.activatedRoute),
+    map(route => {
+      while (route.firstChild) route = route.firstChild;
+      return route;
+    }),
+    filter(route => route.outlet === 'primary'),
+    mergeMap(route => route.data)
+  );
 
   constructor(
     private update: SwUpdate,
@@ -26,6 +39,7 @@ export class AppComponent {
     private fcmService: FirebaseCloudMessageService,
     public auth: AngularFireAuth,
     public route: Router,
+    private activatedRoute: ActivatedRoute,
     public loader: LoaderService,
     private snackBar: MatSnackBar,
     @Inject(CONFIRMATION_SERVICE_TOKEN)
@@ -34,6 +48,9 @@ export class AppComponent {
     this.updateClient();
     this.checkUpdate();
     window.AppLoader = loader;
+  }
+
+  ngOnInit() {
   }
 
   updateClient() {

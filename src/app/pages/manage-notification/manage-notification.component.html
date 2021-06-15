@@ -1,0 +1,47 @@
+<h3 class="text-muted mt-2 font-weight-bolder">Manage Notifications</h3>
+
+<ul [class.hide-footer]="hideFooter"
+    class="notifications-list border list-group pt-1 px-1 pb-5">
+  <li role="button" (click)="toggleSelection(option.id)"
+      *ngFor="let option of messagingTokens" class="list-group-item">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="w-100">
+        <h3 class="m-0 p-0 h3 text-muted font-weight-bold">
+          <i class="fa fa-envelope mr-2"></i>{{option.email}}
+        </h3>
+        <code class="m-0 p-0"><i class="fa fa-tablet mr-2"></i>{{option.platform}}</code>
+      </div>
+      <input [checked]="isSelected(option.id)"
+             style="transform: scale(2);pointer-events: none;" type="checkbox">
+    </div>
+  </li>
+</ul>
+
+<nav [class.hide-footer]="hideFooter"
+     class="page-footer align-items-start navbar navbar-light bg-light fixed-bottom border-top">
+  <div class="container-fluid">
+    <div class="col-md-6 col-sm-8 offset-sm-2 offset-md-3">
+      <h4 class="border-bottom m-0 p-0 pb-2 font-weight-bold text-muted mb-2">
+        Send Notification
+        <i role="button" [hidden]="!hideFooter" (click)="hideFooter = !hideFooter"
+           class="fa fa-chevron-up float-right"></i>
+        <i role="button" [hidden]="hideFooter" (click)="hideFooter = !hideFooter"
+           class="fa fa-chevron-down float-right"></i>
+      </h4>
+    </div>
+    <form #sampleForm="ngForm" class="col-md-6 col-sm-8 offset-sm-2 offset-md-3" [hidden]="hideFooter">
+      <div class="form-group mb-2">
+        <input name="title" ngModel required type="text" class="form-control" placeholder="Notification Title">
+      </div>
+      <div class="form-group mb-2">
+        <input name="icon" ngModel type="url" class="form-control" placeholder="Notification Image URL">
+      </div>
+      <div class="form-group mb-2">
+        <textarea name="body" ngModel required class="form-control" placeholder="Notification Message"></textarea>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button [disabled]="sampleForm.invalid || selectedIds.length == 0" (click)="sendMessageToSelected(sampleForm)" type="submit" class="btn btn-outline-secondary">Send</button>
+      </div>
+    </form>
+  </div>
+</nav>

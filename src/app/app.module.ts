@@ -23,9 +23,10 @@ import {LoginComponent} from './pages/login/login.component';
 import {UserComponent} from './pages/user/user.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ManageNotificationComponent } from './pages/manage-notification/manage-notification.component';
 
 @NgModule({
-  declarations: [AppComponent, ExpensesComponent, SideMenuComponent, ConfirmationComponent, LoginComponent, UserComponent],
+  declarations: [AppComponent, ExpensesComponent, SideMenuComponent, ConfirmationComponent, LoginComponent, UserComponent, ManageNotificationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

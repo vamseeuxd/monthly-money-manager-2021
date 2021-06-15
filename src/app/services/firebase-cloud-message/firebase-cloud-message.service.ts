@@ -4,13 +4,15 @@ import {BehaviorSubject, combineLatest, Observable} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AngularFireMessaging} from "@angular/fire/messaging";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
+import {DeviceUUID} from 'device-uuid';
 
 export interface IMessagingToken {
   createdOn: number,
   updatedOn: number,
   id: string;
   email: string;
-  token: string
+  platform: string;
+  token: string;
 }
 
 @Injectable({
@@ -30,9 +32,11 @@ export class FirebaseCloudMessageService {
    * ts-ignore for 'token' has no initializer and is not definitely assigned in the constructor
    * @ts-ignore */
   token: string = '';
+  deviceId = '';
   tokenAction: BehaviorSubject<string | null> = new BehaviorSubject<string | null>('');
   token$: Observable<string | null> = this.tokenAction.asObservable();
   private messagingTokensCollection: AngularFirestoreCollection<IMessagingToken>;
+  private platform = '';
 
   constructor(
     private afMessaging: AngularFireMessaging,
@@ -41,6 +45,8 @@ export class FirebaseCloudMessageService {
   ) {
     this.messagingTokensCollection = afs.collection<IMessagingToken>('messagingTokens');
     setTimeout(() => {
+      this.deviceId = new DeviceUUID().get();
+      this.platform = new DeviceUUID().parse().platform;
       this.afMessaging.getToken.subscribe(value => {
         this.token = value ? value : '';
         this.tokenAction.next(this.token);
@@ -52,13 +58,15 @@ export class FirebaseCloudMessageService {
                 this.token = token;
                 this.tokenAction.next(this.token);
                 const busyIndicatorId = window.AppLoader.show();
-                const docRef = this.messagingTokensCollection.ref.doc();
-                const id = docRef.id;
+                // const docRef = this.messagingTokensCollection.ref.doc();
+                const docRef = this.messagingTokensCollection.doc(this.deviceId);
+                const id = this.deviceId;
+                const platform = this.platform;
                 const email = user.email;
                 const createdOn = window.getServerTime();
                 const updatedOn = window.getServerTime();
                 try {
-                  await docRef.set({email, id, createdOn, updatedOn, token,})
+                  await docRef.set({email, id, createdOn, updatedOn, token, platform})
                   window.AppLoader.hide(busyIndicatorId);
                 } catch (e) {
                   window.AppLoader.hide(busyIndicatorId);
@@ -73,10 +81,4 @@ export class FirebaseCloudMessageService {
     }, 50);
   }
 
-  receiveMessage() {
-    /*this.messaging.onMessage((payload) => {
-      console.log("Message received. ", payload);
-      this.currentMessage.next(payload)
-    });*/
-  }
 }

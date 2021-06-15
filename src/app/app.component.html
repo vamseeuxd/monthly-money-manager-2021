@@ -64,10 +64,10 @@
 </div>
 
 <div
-  *ngIf="loader.showLoader$ | async"
+
   class="position-fixed d-flex flex-column justify-content-center align-items-center top-0 start-0 vw-100 vh-100"
-  style="z-index:10000000000000;background-color: rgba(0,0,0,0.2);top: 0;left: 0;">
+  style="z-index:10000000000000;background-color: rgba(0,0,0,0.5);top: 0;left: 0;">
   <div class="spinner-border text-light" role="status">
   </div>
-  <span class="visually-hidden text-white">Please wait...</span>
+  <span class="visually-hidden text-white bg-dark px-3 py-1 rounded-pill mt-2">Please wait...</span>
 </div>

@@ -25,7 +25,6 @@ export class LoginComponent {
       await this.route.navigate(['expenses']);
       window.AppLoader.hide(loaderId);
     } catch (e) {
-      console.log(e);
       this.snackBar.open(e.message, 'Error');
       window.AppLoader.hide(loaderId);
     }

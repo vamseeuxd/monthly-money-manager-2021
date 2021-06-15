@@ -2,18 +2,26 @@
   <div class="col-sm-8 mt-5 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 px-0">
     <div class="card">
       <ul class="list-group list-group-flush" *ngIf="auth.user | async as user; else showLogin">
-        <li class="list-group-item text-center"><img [src]="user.photoURL" class="rounded-circle shadow-sm"></li>
+        <li class="list-group-item text-center"><img [src]="user.photoURL" class="rounded-circle shadow-sm" alt="userPhoto"></li>
         <li class="list-group-item text-center"><h1
           class="m-0 p-0 text-center text-capitalize">{{ user.displayName }}</h1></li>
         <li *ngIf="user.email" class="list-group-item text-left"><h4 class="m-0 p-0 text-left text-lowercase"><i
           class="fa fa-envelope"></i>&nbsp;&nbsp;&nbsp;{{user.email}}</h4></li>
-        <li *ngIf="user.phoneNumber" class="list-group-item text-left"><h4 class="m-0 p-0 text-center text-capitalize">
-          <i class="fa fa-phone"></i>&nbsp;&nbsp;&nbsp;{{user.phoneNumber}}</h4></li>
+        <li *ngIf="user.phoneNumber" class="list-group-item text-left">
+          <h4 class="m-0 p-0 text-center text-capitalize">
+          <i class="fa fa-phone"></i>&nbsp;&nbsp;&nbsp;{{user.phoneNumber}}
+          </h4>
+        </li>
         <li *ngIf="fcmService.token$ | async as token; else notificationsOff"
             class="list-group-item text-left">
           <h4 class="m-0 p-0 text-left">
             <i class="fa fa-bell"></i>&nbsp;&nbsp;&nbsp;
             Notifications are on for this Device
+          </h4>
+        </li>
+        <li class="list-group-item text-left">
+          <h4 class="m-0 p-0 text-left">
+            DeviceId : {{fcmService.deviceId}}
           </h4>
         </li>
         <li class="list-group-item text-center">

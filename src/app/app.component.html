@@ -1,6 +1,7 @@
 <!--suppress XmlHighlighting -->
-<nav
-  class="
+<ng-container *ngIf="auth.user | async as user">
+  <nav
+    class="
     navbar navbar-light
     bg-light
     fixed-top
@@ -8,39 +9,40 @@
     d-flex
     align-items-center
   "
->
-  <button
-    role="button"
-    aria-label="Center Align"
-    (click)="appSideMenu.open = !appSideMenu.open"
-    class="btn btn-light bg-transparent border-0 position-absolute m-0 p-0"
-    id="app-side-menu-button"
-    style="font-size: 28px"
   >
-    <i class="fa fa-bars"></i>
-  </button>
-  <a class="navbar-brand w-100 m-0">
-    <!--suppress CheckImageSize -->
-    <img
-      src="./assets/icons/icon-192x192.png"
-      height="50"
-      class="d-inline-block align-top mr-3"
-      alt=""
-    />
-    Monthly Money Manager V5
-  </a>
-</nav>
-
+    <button
+      role="button"
+      aria-label="Center Align"
+      (click)="toggleSideMenu(appSideMenu)"
+      class="btn btn-light bg-transparent border-0 position-absolute m-0 p-0"
+      id="app-side-menu-button"
+      style="font-size: 28px"
+    >
+      <i class="fa fa-bars"></i>
+    </button>
+    <a class="navbar-brand w-100 m-0">
+      <!--suppress CheckImageSize -->
+      <img
+        src="./assets/icons/icon-192x192.png"
+        height="50"
+        class="d-inline-block align-top mr-3"
+        alt=""
+      />
+      Monthly Money Manager V5
+    </a>
+  </nav>
+  <app-side-menu #appSideMenu></app-side-menu>
+</ng-container>
 <div class="middle-content">
   <router-outlet></router-outlet>
 </div>
 
-<app-side-menu #appSideMenu></app-side-menu>
 
-<div class="drag-boundary">
+<div class="drag-boundary" *ngIf="auth.user | async as user">
   <div class="d-inline-block dragging-item bg-light border p-1 shadow-sm" cdkDragBoundary=".drag-boundary" cdkDrag>
     <div class="btn-group" dropdown>
-      <button aria-label="Center Align" style="width: 150px;"  dropdownToggle type="button" class="btn btn-default rounded-0 dropdown-toggle">{{selectedPage}} <span class="caret"></span>
+      <button aria-label="Center Align" style="width: 150px;" dropdownToggle type="button"
+              class="btn btn-default rounded-0 dropdown-toggle">{{selectedPage}} <span class="caret"></span>
       </button>
       <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
         <li role="button">
@@ -59,4 +61,13 @@
     </button>
   </div>
 
+</div>
+
+<div
+  *ngIf="loader.showLoader$ | async"
+  class="position-fixed d-flex flex-column justify-content-center align-items-center top-0 start-0 vw-100 vh-100"
+  style="z-index:10000000000000;background-color: rgba(0,0,0,0.2);top: 0;left: 0;">
+  <div class="spinner-border text-light" role="status">
+  </div>
+  <span class="visually-hidden text-white">Please wait...</span>
 </div>

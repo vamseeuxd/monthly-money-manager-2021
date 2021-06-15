@@ -12,6 +12,7 @@ declare global {
   interface Window {
     AppLoader: LoaderService;
     getServerTime: () => number;
+    registerForMessage: () => void;
   }
 }
 

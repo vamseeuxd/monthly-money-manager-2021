@@ -24,9 +24,19 @@ import {UserComponent} from './pages/user/user.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ManageNotificationComponent } from './pages/manage-notification/manage-notification.component';
+import {SnackbarComponent} from "./services/firebase-cloud-message/firebase-cloud-message.service";
 
 @NgModule({
-  declarations: [AppComponent, ExpensesComponent, SideMenuComponent, ConfirmationComponent, LoginComponent, UserComponent, ManageNotificationComponent],
+  declarations: [
+    AppComponent,
+    ExpensesComponent,
+    SideMenuComponent,
+    ConfirmationComponent,
+    LoginComponent,
+    UserComponent,
+    SnackbarComponent,
+    ManageNotificationComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

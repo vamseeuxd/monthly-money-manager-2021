@@ -1,10 +1,12 @@
-import {Injectable} from '@angular/core';
+import {Component, Inject, Injectable} from '@angular/core';
 import firebase from "firebase";
 import {BehaviorSubject, combineLatest, from, Observable} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AngularFireMessaging} from "@angular/fire/messaging";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
 import {DeviceUUID} from 'device-uuid';
+import {MAT_SNACK_BAR_DATA, MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar/snack-bar-config";
 
 export interface IMessagingToken {
   createdOn: number,
@@ -13,6 +15,41 @@ export interface IMessagingToken {
   email: string;
   platform: string;
   token: string;
+}
+
+@Component({
+  selector: 'snack-bar-component-example-snack',
+  template: `
+    <div class="snack-container">
+      <div class="snack-container-message">
+        <div class="w-100 d-flex justify-content-between align-items-center">
+          <ng-container *ngIf="data?.value?.notification?.icon">
+            <img [src]="data.value.notification.icon">
+          </ng-container>
+          <div class="w-100 pl-2">
+            <ng-container *ngIf="data?.value?.notification?.title">
+              <h2 class="m-0 p-0">{{data.value.notification.title}}</h2>
+            </ng-container>
+            <ng-container *ngIf="data?.value?.notification?.body">
+              <h3 class="m-0 p-0">{{data.value.notification.body}}</h3>
+            </ng-container>
+          </div>
+          <div class="snack-container-icon">
+            <i style="font-size: 20px;" class="fa fa-close" (click)="closeSnackbar()"></i>
+          </div>
+        </div>
+      </div>
+  `,
+  styles: [``],
+})
+export class SnackbarComponent {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
+    console.log(data);
+  }
+
+  closeSnackbar() {
+    this.data.snackBar.dismiss();
+  }
 }
 
 @Injectable({
@@ -41,8 +78,10 @@ export class FirebaseCloudMessageService {
   constructor(
     private afMessaging: AngularFireMessaging,
     private afs: AngularFirestore,
+    public snackBar: MatSnackBar,
     private afAuth: AngularFireAuth
   ) {
+    // window.registerForMessage = this.registerForMessage.bind(this);
     this.messagingTokensCollection = afs.collection<IMessagingToken>('messagingTokens');
     setTimeout(() => {
       this.deviceId = new DeviceUUID().get();
@@ -99,9 +138,30 @@ export class FirebaseCloudMessageService {
   }
 
   registerForMessage(): void {
-    this.afMessaging.messages.subscribe(value => {
-      console.log(value);
+    /*const value = {
+      "from": "706023131609",
+      "priority": "normal",
+      "notification": {
+        "title": "Test",
+        "icon": "https://firebasestorage.googleapis.com/v0/b/monthly-money-manager-7c461.appspot.com/o/icon-50x50.png?alt=media&token=7a9a8b0b-05f1-4075-b230-8e5c2489bae7",
+        "body": "this message for your support"
+      },
+      "collapse_key": "do_not_collapse"
+    };
+    this.openSnackBar(value, 'error');*/
+    this.afMessaging.messages.subscribe((value: any) => {
+      this.openSnackBar(value, 'error')
     })
+  }
+
+  public openSnackBar(value: any, type: string, duration?: number, verticalPosition?: MatSnackBarVerticalPosition, horizontalPosition?: MatSnackBarHorizontalPosition) {
+    const _snackType = type !== undefined ? type : 'success';
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      duration: duration || 4000,
+      horizontalPosition: horizontalPosition || 'end',
+      verticalPosition: verticalPosition || 'bottom',
+      data: {value: value, snackType: _snackType, snackBar: this.snackBar}
+    });
   }
 
 }

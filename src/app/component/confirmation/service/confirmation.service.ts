@@ -20,6 +20,7 @@ export class ConfirmationService {
     buttonText = {ok: 'OK', cancel: 'Cancel'}
   ) {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
+      disableClose: true,
       data: {
         message,
         buttonText,

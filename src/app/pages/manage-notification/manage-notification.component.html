@@ -21,7 +21,7 @@
      class="page-footer align-items-start navbar navbar-light bg-light fixed-bottom border-top">
   <div class="container-fluid">
     <div class="col-md-6 col-sm-8 offset-sm-2 offset-md-3">
-      <h4 class="border-bottom m-0 p-0 pb-2 font-weight-bold text-muted mb-2">
+      <h4 class="border-bottom m-0 p-0 pb-2 font-weight-bold text-muted mb-2" role="button" (click)="hideFooter = !hideFooter">
         Send Notification
         <i role="button" [hidden]="!hideFooter" (click)="hideFooter = !hideFooter"
            class="fa fa-chevron-up float-right"></i>
@@ -31,16 +31,17 @@
     </div>
     <form #sampleForm="ngForm" class="col-md-6 col-sm-8 offset-sm-2 offset-md-3" [hidden]="hideFooter">
       <div class="form-group mb-2">
-        <input name="title" ngModel required type="text" class="form-control" placeholder="Notification Title">
+        <input autocomplete="off" name="title" ngModel required type="text" class="form-control" placeholder="Notification Title">
       </div>
       <div class="form-group mb-2">
-        <input name="icon" ngModel type="url" class="form-control" placeholder="Notification Image URL">
+        <input autocomplete="off" name="icon" ngModel type="url" class="form-control" placeholder="Notification Image URL">
       </div>
       <div class="form-group mb-2">
-        <textarea name="body" ngModel required class="form-control" placeholder="Notification Message"></textarea>
+        <textarea autocomplete="off" name="body" ngModel required class="form-control" placeholder="Notification Message"></textarea>
       </div>
       <div class="d-flex justify-content-end">
-        <button [disabled]="sampleForm.invalid || selectedIds.length == 0" (click)="sendMessageToSelected(sampleForm)" type="submit" class="btn btn-outline-secondary">Send</button>
+        <button [disabled]="sampleForm.invalid || selectedIds.length == 0" (click)="sendMessageToSelected(sampleForm, false)" type="submit" class="btn btn-outline-secondary">Send</button>
+        <button [disabled]="sampleForm.invalid || selectedIds.length == 0" (click)="sendMessageToSelected(sampleForm, true)" type="submit" class="btn btn-outline-secondary">Send & Close</button>
       </div>
     </form>
   </div>

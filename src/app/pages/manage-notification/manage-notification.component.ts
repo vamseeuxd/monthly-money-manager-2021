@@ -48,7 +48,7 @@ export class ManageNotificationComponent implements OnInit {
   }
 
   // {"multicast_id":2532717427176027534,"success":1,"failure":0,"canonical_ids":0,"results":[{"message_id":"0:1623777483075875%0f493ae6f9fd7ecd"}]}
-  sendMessageToSelected(sampleForm: NgForm) {
+  sendMessageToSelected(sampleForm: NgForm, close: boolean) {
     const requests: any[] = [];
     this.selectedIds.forEach(value => {
       const toToken = this.messagingTokens.find(value1 => value1.id == value);
@@ -68,8 +68,11 @@ export class ManageNotificationComponent implements OnInit {
         .subscribe((value: any[]) => {
           debugger;
           window.AppLoader.hide(loaderId);
-          sampleForm.resetForm({});
-          this.selectedIds = [];
+          if (close) {
+            sampleForm.resetForm({});
+            this.selectedIds = [];
+            this.hideFooter = true;
+          }
           this.snackBar.open(`success : ${value.filter(x => x.success).length} & failure : ${value.filter(x => x.failure).length}`, 'Close')
         }, error => {
           debugger;
